@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33801.468
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TopoEditAddin2022", "TopoEditAddin2022\TopoEditAddin2022.csproj", "{43754809-C6CE-404D-9719-029C12DB765F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{43754809-C6CE-404D-9719-029C12DB765F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43754809-C6CE-404D-9719-029C12DB765F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43754809-C6CE-404D-9719-029C12DB765F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43754809-C6CE-404D-9719-029C12DB765F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CC94BEAA-4968-4712-8E62-2D7D6D73FB3C}
+	EndGlobalSection
+EndGlobal

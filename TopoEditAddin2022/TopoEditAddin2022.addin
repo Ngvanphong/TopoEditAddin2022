@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RevitAddIns>
+	<AddIn Type="Command">
+		<Text>Command TopoEditAddin2022</Text>
+		<Description>TopoEditAddin2022</Description>
+		<Assembly>TopoEditAddin2022.dll</Assembly>
+		<FullClassName>TopoEditAddin2022.Command</FullClassName>
+		<ClientId>43754809-c6ce-404d-9719-029c12db765f</ClientId>
+		<VendorId>Tobic</VendorId>
+		<VendorDescription>Tobic</VendorDescription>
+	</AddIn>
+	<AddIn Type="Application">
+		<Name>Application TopoEditAddin2022</Name>
+		<Assembly>TopoEditAddin2022.dll</Assembly>
+		<FullClassName>TopoEditAddin2022.App</FullClassName>
+		<ClientId>0fb58e17-c3bd-4668-a2fa-ba573a41a597</ClientId>
+		<VendorId>Tobic</VendorId>
+		<VendorDescription>Tobic</VendorDescription>
+	</AddIn>
+</RevitAddIns>
