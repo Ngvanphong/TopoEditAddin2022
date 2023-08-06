@@ -15,14 +15,15 @@ namespace TopoEditAddin2022.EditTopo
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            UIDocument uiDoc = commandData.Application.ActiveUIDocument;
-            Document doc = commandData.Application.ActiveUIDocument.Document;
-            var selectedIts = uiDoc.Selection.GetElementIds();
+            UIDocument uiDoc = commandData.Application.ActiveUIDocument; // Quan ly select, click, ...
+            Document doc = commandData.Application.ActiveUIDocument.Document; // Quan ly toan bo du lieu
+            var selectedIts = uiDoc.Selection.GetElementIds(); // get ids cua toan bo doi tuong dang select trong revit 
             TopographySurface topo = null;
             foreach (ElementId id in selectedIts) // tim topo selected
             {
                 Element element = doc.GetElement(id);
-                if (element.Category != null && element.Category.Id.IntegerValue == (int)BuiltInCategory.OST_TopographySurface)
+                if (element.Category != null &&
+                    element.Category.Id.IntegerValue == (int)BuiltInCategory.OST_Topography) // Kiem tra category
                 {
                     topo = element as TopographySurface;
                 }
@@ -47,17 +48,18 @@ namespace TopoEditAddin2022.EditTopo
             XYZ endPointTopo = null;
             foreach (XYZ point in listPointOfTopos)
             {
-                if (point.X == firstPoint.X && point.Y == firstPoint.Y)
+                if (Math.Abs(point.X - firstPoint.X)< 50/304.8 && Math.Abs(point.Y - firstPoint.Y)<50/304.8)
                 {
                     firstPointTopo = point;
                 }
-                if (point.X == endPoint.X && point.Y == endPoint.Y)
+                if (Math.Abs(point.X - endPoint.X) < 50 / 304.8 && Math.Abs(point.Y - endPoint.Y) < 50 / 304.8)
                 {
                     endPointTopo = point;
                 }
             }
             if (firstPointTopo == null || endPointTopo == null) return Result.Succeeded;
             int countDevide = EditTopoCommon.CountDivide;
+
             List<XYZ> listPointDevide = new List<XYZ>();
 
             Line line = Line.CreateBound(firstPointTopo, endPointTopo);
@@ -72,12 +74,13 @@ namespace TopoEditAddin2022.EditTopo
             {
                 if (i == 0 || i == totalPoint - 1) continue;
                 Line lineItem = Line.CreateBound(firstPointTopo, endPointTopo);
-                lengthItem += distanceDivide * i;
+                lengthItem = distanceDivide * i;
                 double paraItem = firstPara + (lengthItem / length) * (endPara - firstPara);
                 lineItem.MakeBound(firstPara, paraItem);
                 XYZ pointItem = lineItem.GetEndPoint(1);
                 listPointDevide.Add(pointItem);
             }
+
             using (TopographyEditScope topoScopre = new TopographyEditScope(doc, "ModifyTopo"))
             {
                 topoScopre.Start(topo.Id);
@@ -91,7 +94,6 @@ namespace TopoEditAddin2022.EditTopo
 
             }
 
-
             return Result.Succeeded;
         }
     }
@@ -100,7 +102,7 @@ namespace TopoEditAddin2022.EditTopo
     {
         public FailureProcessingResult PreprocessFailures(FailuresAccessor failuresAccessor)
         {
-            return FailureProcessingResult.ProceedWithRollBack;
+            return FailureProcessingResult.Continue;
         }
     }
 }
