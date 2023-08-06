@@ -15,7 +15,7 @@ namespace TopoEditAddin2022.Button
 {
     public class TopoEditButton
     {
-        public void EditTopo(UIControlledApplication application)
+        public void EditTopo(UIControlledApplication application) // uicontrolledapplication la de quan ly ribbon, panel , button,...
         {
             try
             {
@@ -23,7 +23,7 @@ namespace TopoEditAddin2022.Button
             }
             catch{}
             RibbonPanel panelArchitect = null;
-            List<RibbonPanel> allPanelOfRevitAPI= application.GetRibbonPanels(AppConstants.RibbonName1);
+            List<RibbonPanel> allPanelOfRevitAPI= application.GetRibbonPanels(AppConstants.RibbonName1); // de get toan bo panel cua ribbon
             foreach (RibbonPanel panelItem in allPanelOfRevitAPI) // kiem tra panel da ton tai hay chua
             {
                 if (panelItem.Name == AppConstants.Panel1)
@@ -34,7 +34,7 @@ namespace TopoEditAddin2022.Button
             }
             if (panelArchitect == null) // tao panel
             {
-                panelArchitect = application.CreateRibbonPanel(AppConstants.RibbonName1, AppConstants.Panel1);
+                panelArchitect = application.CreateRibbonPanel(AppConstants.RibbonName1, AppConstants.Panel1); // tao panel
             }
 
             ImageSource imageSource = Extension.GetImageSource(Resources.Copy);

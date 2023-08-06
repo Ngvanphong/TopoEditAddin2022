@@ -14,6 +14,7 @@ namespace TopoEditAddin2022
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
+            TaskDialog.Show("Command", "Command");
             return Result.Succeeded;
         }
     }
