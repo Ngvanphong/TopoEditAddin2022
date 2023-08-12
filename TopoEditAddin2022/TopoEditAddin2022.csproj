@@ -68,6 +68,7 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="AppConstants.cs" />
+    <Compile Include="Button\TestButton.cs" />
     <Compile Include="Button\TopoEditButton.cs" />
     <Compile Include="Command.cs" />
     <Compile Include="EditTopo\EditTopoCommon.cs" />
@@ -79,6 +80,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="TestBiding\TestBinding.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

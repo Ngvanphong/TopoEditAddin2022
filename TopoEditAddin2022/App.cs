@@ -14,6 +14,8 @@ namespace TopoEditAddin2022
         {
             TopoEditButton topoEditButton= new TopoEditButton();
             topoEditButton.EditTopo(a);
+            TestButton testButton= new TestButton();
+            testButton.Test(a);
             return Result.Succeeded;
         }
 
