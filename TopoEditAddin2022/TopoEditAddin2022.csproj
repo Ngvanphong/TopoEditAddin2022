@@ -80,6 +80,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="TestBiding\Save.cs" />
     <Compile Include="TestBiding\TestBinding.cs" />
   </ItemGroup>
   <ItemGroup>

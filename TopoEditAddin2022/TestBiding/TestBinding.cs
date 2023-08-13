@@ -16,50 +16,75 @@ namespace TopoEditAddin2022.TestBiding
         {
             UIDocument uiDoc = commandData.Application.ActiveUIDocument; // quan ly click , selecion, thao tac..
             Document doc = uiDoc.Document; // quan ly toan bo du lieu
+            // Lay view dang hoat dong
+            View actionView = doc.ActiveView;
+            // get tat ca cac doi tuong trong view bao gom ca type
+            FilteredElementCollector allElementOfView = new FilteredElementCollector(doc, actionView.Id);
+            // Loai bo type chi lay element;
+            var allElementNotType = allElementOfView.WhereElementIsNotElementType();
+            // Tao bo loc thong qua category;
+            //ElementCategoryFilter doorCategoryFilter = new ElementCategoryFilter(BuiltInCategory.OST_Doors);
+            // Ap dung bo loc de lay doi tuong theo category;
+            //var allDoors= allElementNotType.WherePasses(doorCategoryFilter).ToElements();
+            //IList<Element> doorCollection = allElementNotType.OfCategory(BuiltInCategory.OST_Doors).ToElements();
 
-            ICollection<ElementId> ids= uiDoc.Selection.GetElementIds();  // lay toan bo id cua doi tuong dang chon.
-            IList<Wall> walls = new List<Wall>();
-            foreach(ElementId id in ids )
-            {
-                Element element= doc.GetElement(id); // get element tu element id thong qua doc
-                // Kiem tra category cua element co phai la wall khong
-                if(element.Category != null && element.Category.Id.IntegerValue == (int)BuiltInCategory.OST_Walls)
-                {
-                    Wall wall = element as Wall;
-                    walls.Add(wall); // ep kieu element thanh wall, do wall ke thua tu element nen ep kieu duoc
-                }
-            }
-            
-            string value = "Tuong 1";
-            // se sua hoac tao moi bat cu thu gi trong revit.
-            using(TransactionGroup tg = new TransactionGroup(doc, "GroupTransaaction"))
+            ElementCategoryFilter wallCategoryFilter = new ElementCategoryFilter(BuiltInCategory.OST_Walls);
+            //var allWalls= allElementNotType.WherePasses(wallCategoryFilter).ToElements();
+
+            //IList<ElementFilter> listFilter= new List<ElementFilter>(){ doorCategoryFilter,wallCategoryFilter };
+            //listFilter.Add(doorCategoryFilter);
+            //listFilter.Add(wallCategoryFilter);
+            //LogicalOrFilter orFilter = new LogicalOrFilter(listFilter); // Bo loc OR
+            //IList<Element> wallDoors= allElementNotType.WherePasses(orFilter).ToElements();
+
+            var allWall= allElementNotType.WherePasses(wallCategoryFilter).ToElements();
+            var allWallHasW =
+                allWall.Where(item => item.get_Parameter(BuiltInParameter.ALL_MODEL_INSTANCE_COMMENTS) != null
+                &&item.get_Parameter(BuiltInParameter.ALL_MODEL_INSTANCE_COMMENTS).AsString() == "300").ToList();
+
+            //ParameterValueProvider paraFilter = new ParameterValueProvider(
+            //    new ElementId((int)BuiltInParameter.ALL_MODEL_INSTANCE_COMMENTS));
+            //FilterStringRule stringRule = new FilterStringRule(paraFilter, new FilterStringEquals(), "W");
+            //ElementParameterFilter elementParameterFilter = new ElementParameterFilter(stringRule);
+            //var allWallHasW2 = allWall.WherePasses(elementParameterFilter).ToList();
+
+            using(TransactionGroup tg= new TransactionGroup(doc, "GroupEditWall"))
             {
                 tg.Start();
-                foreach (Wall item in walls)
+                foreach(Element el in allWallHasW)
                 {
-                    using (Transaction t = new Transaction(doc, "SetComments"))
+                    using (Transaction t = new Transaction(doc, "EditThickness"))
                     {
                         t.Start();
-                        //Parameter paraComment = item.LookupParameter("Type Comments"); // get parameter theo name truyen vao.
-                        //if (paraComment != null) paraComment.Set(value); //set gia tri cho parameter;
-                        //Parameter para = item.get_Parameter(BuiltInParameter.ALL_MODEL_INSTANCE_COMMENTS);
-                        //para.Set(value);
-                        ParameterSet parameters= item.Parameters;
-                        foreach (Parameter p in parameters)
+                        Wall wall = el as Wall;
+                        WallType wallType = wall.WallType;
+                        wallType.get_Parameter(BuiltInParameter.ALL_MODEL_TYPE_COMMENTS).Set("300");
+
+                        CompoundStructure compoundStructure = wallType.GetCompoundStructure();
+                        IList<CompoundStructureLayer> compoundStructureLayers= compoundStructure.GetLayers();
+
+                        foreach(CompoundStructureLayer layer in compoundStructureLayers)
                         {
-                            if(p.Definition.Name== "Type Comments")
-                            {
-                                p.Set(value);
-                                break;
-                            }
+                            int index = layer.LayerId;
+                            compoundStructure.SetLayerWidth(index, 900 / 304.8);  
                         }
+                        wallType.SetCompoundStructure(compoundStructure);
                         t.Commit();
                     }
                 }
                 tg.Assimilate();
             }
-            
-            
+
+
+
+
+
+
+
+
+
+
+
 
 
             return Result.Succeeded;
