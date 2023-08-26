@@ -19,76 +19,85 @@ namespace TopoEditAddin2022.TestBiding
             UIDocument uiDoc = commandData.Application.ActiveUIDocument; // quan ly click , selecion, thao tac..
             Document doc = uiDoc.Document; // quan ly toan bo du lieu
 
-            ////lay doi tuong dang chon
-            //ICollection<ElementId> ids= uiDoc.Selection.GetElementIds();
-            //if (ids.Count() == 0) return Result.Succeeded;
-            //ElementId id= ids.First(); // lay id dau tien trong mang
-            //Element element = doc.GetElement(id); // tu id lay doi tuong
-
-            //// lay hop bounding box cua doi tuong trong view hien tai
-            //BoundingBoxXYZ boundingBox = element.get_BoundingBox(doc.ActiveView); 
-            //XYZ p1 = boundingBox.Min; // 2 diem tren duong cheo hinh chu nhat
-            //XYZ p2= boundingBox.Max;
-
-            //// tim diem goc trai duoi 
-            //XYZ min = new XYZ(Math.Min(p1.X, p2.X), Math.Min(p1.Y, p2.Y),Math.Min(p1.Z, p2.Z));
-            //// tim diem goc phai tren
-            //XYZ max = new XYZ(Math.Max(p1.X, p2.X), Math.Max(p1.Y, p2.Y),Math.Max(p1.Z, p2.Z));
-            //// tao outline de ap dung bo loc
-            //Outline outLine = new Outline(min, max);
-            //// tao bo loc giao voi bounding box
-            //BoundingBoxIntersectsFilter boundingBoxFilter= new BoundingBoxIntersectsFilter(outLine);
-
-            //// lay tat ca cac doi tuong trong view khong phai la type
-            //var collection = new FilteredElementCollector(doc, doc.ActiveView.Id).WhereElementIsNotElementType();
-
-            //// ap dung bo loc giao voi bounding box
-            //var intersectionBoundingBox = collection.WherePasses(boundingBoxFilter).ToElements()
-            //    .Where(x=>x.Id!=id).ToList();
-
-            /////
-
-
-            ICollection<ElementId> elementsIds = uiDoc.Selection.GetElementIds();
-            if (elementsIds.Count() == 0) return Result.Succeeded;
-            IList<DetailCurve> listDetailCurve= new List<DetailCurve>(); // khoi tao list de luu cac detail curve lai
-            foreach(ElementId id in elementsIds)
+            ICollection<ElementId> ids = uiDoc.Selection.GetElementIds();
+            IList<Room> listRoom= new List<Room>(); 
+            foreach (ElementId id in ids)
             {
-                Element element = doc.GetElement(id);
-                DetailCurve detailItem= element as DetailCurve; // ep kieu element thanh detail curve;
-                if(detailItem != null)
+                Room room= doc.GetElement(id) as Room;
+                if(room != null)
                 {
-                    listDetailCurve.Add(detailItem);
+                    listRoom.Add(room);
                 }
             }
 
-            // tim tat ca cac family theo ten trong du an
-            var family = new FilteredElementCollector(doc).OfClass(typeof(Family))
-                .Where(x => x.Name == "UB-Universal Beams (AS 3679_1)").Cast<Family>().First();
-            // lay id type dau tien cua family 
-            ElementId idFamilySymbol= family.GetFamilySymbolIds().First(); 
-            // lay type tu id
-            FamilySymbol familySymbol= doc.GetElement(idFamilySymbol) as FamilySymbol;
+            SpatialElementBoundaryOptions option = new SpatialElementBoundaryOptions();
+            // lay hinh dang room theo finish
+            option.SpatialElementBoundaryLocation = SpatialElementBoundaryLocation.Finish; 
 
-            // level hien tai cua view
-            Level level = doc.ActiveView.GenLevel;
-
-            using (TransactionGroup tg= new TransactionGroup(doc, "groupTransaction"))
+            using (TransactionGroup tg= new TransactionGroup(doc, "GroupEdit"))
             {
                 tg.Start();
-                foreach(DetailCurve detail in listDetailCurve)
+
+                foreach (Room room in listRoom)
                 {
-                    using (Transaction t = new Transaction(doc, "CreateBeam"))
+                    var boundarySegment = room.GetBoundarySegments(option);
+                    // tim ra curveloop lon nhat
+                    double lengthMax = 0;
+                    IList<BoundarySegment> curveLoopMax = null;
+                    foreach (IList<BoundarySegment> curveLoopItem in boundarySegment)
+                    {
+                        // xac dinh tong chieu dai cua curve loop
+                        double totalLengthItem = 0;
+                        foreach (BoundarySegment curve in curveLoopItem)
+                        {
+                            totalLengthItem += curve.GetCurve().Length;
+                        }
+
+                        // kiem tra xem chieu dai curve loop co lon hon chieu dai max khong
+                        if (totalLengthItem > lengthMax)
+                        {
+                            curveLoopMax = curveLoopItem;
+                            lengthMax = totalLengthItem;
+                        }
+                    }
+                    if (curveLoopMax.Count == 0) continue;
+
+                    CurveLoop curveLoop = new CurveLoop();
+                    foreach(BoundarySegment curve in curveLoopMax)
+                    {
+                        curveLoop.Append(curve.GetCurve());
+                    }
+
+                    //var typeCeilling = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Ceilings)
+                    //    .WhereElementIsElementType().Where(x=>x.Name== "3000 x 3000mm Grid").First();
+
+                    var typeWall = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Walls).
+                        WhereElementIsElementType().Where(x => x.Name == "CL_W1").First();
+                    using(Transaction t = new Transaction(doc, "CreateCeiling"))
                     {
                         t.Start();
                         try
                         {
-                            // kiem tra type co dang duoc active hay khong, neu khong thi active
-                            if (!familySymbol.IsActive) familySymbol.Activate();
+                            //IList<CurveLoop> listCurveLoop= new List<CurveLoop>() { curveLoop };
+                            //Ceiling ceiling = Autodesk.Revit.DB.Ceiling.Create(doc,
+                            //    listCurveLoop, typeCeilling.Id, doc.ActiveView.GenLevel.Id);
+                            foreach(var curve in curveLoop)
+                            {
+                                Wall wall = Autodesk.Revit.DB.Wall.Create(doc, curve, doc.ActiveView.GenLevel.Id,
+                                    false);
 
-                            // tao dam theo curve
-                            FamilyInstance beam = doc.Create.NewFamilyInstance(detail.GeometryCurve,
-                                familySymbol, level, Autodesk.Revit.DB.Structure.StructuralType.Beam);
+                                wall.get_Parameter(BuiltInParameter.WALL_KEY_REF_PARAM).Set(5);
+                                var locationInner = wall.Location as LocationCurve;
+                                var curveInter = locationInner.Curve;
+
+
+
+                                wall.get_Parameter(BuiltInParameter.WALL_KEY_REF_PARAM).Set(0);
+                                var newLocation = (wall.Location as LocationCurve);
+                                var newCurve = newLocation.Curve;
+                                newLocation.Curve = curveInter;
+
+                            }
 
                             t.Commit();
                         }
@@ -98,11 +107,16 @@ namespace TopoEditAddin2022.TestBiding
                         }
                     }
                 }
-                
 
                 tg.Assimilate();
             }
+           
+           
 
+
+
+
+            
 
 
 
