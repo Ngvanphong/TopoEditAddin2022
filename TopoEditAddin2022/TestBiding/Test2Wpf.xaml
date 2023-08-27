@@ -57,6 +57,7 @@
                 <RadioButton IsChecked="True">Column</RadioButton>
                 <RadioButton>Slab</RadioButton>
             </StackPanel>
+            
             <StackPanel Margin="20 10 0 0" Orientation="Vertical">
                 <RadioButton >Wall</RadioButton>
                 <RadioButton IsChecked="True">Door</RadioButton>
