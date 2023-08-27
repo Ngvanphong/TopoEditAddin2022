@@ -37,6 +37,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="RevitAPI">
       <HintPath>..\..\..\..\..\..\Program Files\Autodesk\Revit 2022\RevitAPI.dll</HintPath>
     </Reference>
@@ -49,6 +50,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -81,13 +83,31 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="TestBiding\Save.cs" />
+    <Compile Include="TestBiding\Test2AppShow.cs" />
+    <Compile Include="TestBiding\Test2Wpf.xaml.cs">
+      <DependentUpon>Test2Wpf.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestBiding\TestAppShow.cs" />
     <Compile Include="TestBiding\TestBinding.cs" />
+    <Compile Include="TestBiding\TestWpf.xaml.cs">
+      <DependentUpon>TestWpf.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="TestBiding\Test2Wpf.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TestBiding\TestWpf.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
