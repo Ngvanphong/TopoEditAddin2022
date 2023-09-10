@@ -1,0 +1,56 @@
+﻿<Window x:Class="TopoEditAddin2022.TestBiding.Test4Wpf"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TopoEditAddin2022.TestBiding"
+             mc:Ignorable="d" 
+             Height="400" Width="400"
+            Topmost="True">
+    <Grid>
+        <!--<ItemsControl Name="itemControlSheets">
+            --><!--<TextBox Text="This is Text 1"/>
+            <TextBox Text="This is Text 2"/>
+            <TextBox Text="This is Text 3"/>
+            <TextBox Text="This is Text 3"/>--><!--
+
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Name}"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>-->
+
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+
+        <!--<ListBox Name="listBoxSheet" Grid.Row="0">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <CheckBox Checked="checkboxChecked"/>
+                        <TextBlock Text="{Binding Name}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>-->
+
+        <ComboBox Name="comboboxSheets" HorizontalAlignment="Left" Width="300" VerticalAlignment="Top" Height="30">
+            <!--<ComboBoxItem Content="ComboBox 1"/>
+            <ComboBoxItem Content="ComboBox 2"/>
+            <ComboBoxItem Content="ComboBox 3"/>-->
+
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Name}"/>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+            
+        </ComboBox>
+        
+        
+        <Button Click="btnShowName" HorizontalAlignment="Right" Width="100" Grid.Row="1" Content="Show"/>
+    </Grid>
+</Window>

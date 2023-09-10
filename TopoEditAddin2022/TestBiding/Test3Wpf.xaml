@@ -1,0 +1,52 @@
+﻿<Window x:Class="TopoEditAddin2022.TestBiding.Test3Wpf"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TopoEditAddin2022.TestBiding"
+             mc:Ignorable="d" 
+             Width="400"
+            Height="400">
+    <Grid Margin="10">
+        <!--<Grid.RowDefinitions>
+            <RowDefinition>
+            </RowDefinition>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+  
+        
+        <WrapPanel  HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="1">
+            <Button Margin="0 0 10 0" Content="Button1"/>
+            <Button Margin="0 0 10 0" Content="Button2"/>
+            <Button Content="Button3"/>
+        </WrapPanel>
+        
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition  Width="0.5*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            
+            <StackPanel Grid.Column="0" Orientation="Vertical">
+                <Label  Height="30" HorizontalAlignment="Right" Content="Ten:"/>
+                <Label Margin="0 10 0 0" Height="30" HorizontalAlignment="Right" Content="Tuoi:"/>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Orientation="Vertical">
+                <TextBox Height="30" Name="TxtName"/>
+                <TextBox Margin="0 10 0 0" Height="30" Name="TxtAge"/>
+            </StackPanel>
+
+        </Grid>-->
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Text="This is conent"/>
+        <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch"/>
+        <TextBlock Grid.Column="2" Text="This is conent"/>
+
+    </Grid>
+</Window>

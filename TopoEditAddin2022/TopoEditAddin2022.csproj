@@ -65,6 +65,7 @@
   <ItemGroup>
     <None Include="Resources\topo.jpg" />
     <None Include="Resources\Copy.png" />
+    <Resource Include="Images\ARAmmo.png" />
     <Content Include="TopoEditAddin2022.addin" />
   </ItemGroup>
   <ItemGroup>
@@ -87,6 +88,13 @@
     <Compile Include="TestBiding\Test2Wpf.xaml.cs">
       <DependentUpon>Test2Wpf.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TestBiding\Test3Wpf.xaml.cs">
+      <DependentUpon>Test3Wpf.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestBiding\Test4AppShow.cs" />
+    <Compile Include="TestBiding\Test4Wpf.xaml.cs">
+      <DependentUpon>Test4Wpf.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TestBiding\TestAppShow.cs" />
     <Compile Include="TestBiding\TestBinding.cs" />
     <Compile Include="TestBiding\TestWpf.xaml.cs">
@@ -101,6 +109,14 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="TestBiding\Test2Wpf.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TestBiding\Test3Wpf.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TestBiding\Test4Wpf.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

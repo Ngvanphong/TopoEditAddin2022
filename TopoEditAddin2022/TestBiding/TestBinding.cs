@@ -19,10 +19,25 @@ namespace TopoEditAddin2022.TestBiding
             UIDocument uiDoc = commandData.Application.ActiveUIDocument; // quan ly click , selecion, thao tac..
             Document doc = uiDoc.Document; // quan ly toan bo du lieu
 
-            Test2AppShow.ShowTest2Form();
+            var collection = new FilteredElementCollector(doc)
+                .OfCategory(BuiltInCategory.OST_Sheets).WhereElementIsNotElementType()
+                .Cast<ViewSheet>().ToList();
 
-           
-          
+
+            Test4AppShow.ShowTest4Wpf();
+
+            //Test4AppShow.test4Wpf.itemControlSheets.ItemsSource = collection;
+
+            //Test4AppShow.test4Wpf.listBoxSheet.ItemsSource = collection;
+
+
+            Test4AppShow.test4Wpf.comboboxSheets.ItemsSource = collection;
+
+
+
+
+
+
 
 
 
