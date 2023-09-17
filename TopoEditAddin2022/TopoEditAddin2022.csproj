@@ -83,6 +83,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="TestBiding\ChangeTypeWallHandler.cs" />
     <Compile Include="TestBiding\Save.cs" />
     <Compile Include="TestBiding\Test2AppShow.cs" />
     <Compile Include="TestBiding\Test2Wpf.xaml.cs">
@@ -94,6 +95,10 @@
     <Compile Include="TestBiding\Test4AppShow.cs" />
     <Compile Include="TestBiding\Test4Wpf.xaml.cs">
       <DependentUpon>Test4Wpf.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestBiding\Test5AppShow.cs" />
+    <Compile Include="TestBiding\Test5Wpf.xaml.cs">
+      <DependentUpon>Test5Wpf.xaml</DependentUpon>
     </Compile>
     <Compile Include="TestBiding\TestAppShow.cs" />
     <Compile Include="TestBiding\TestBinding.cs" />
@@ -117,6 +122,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="TestBiding\Test4Wpf.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TestBiding\Test5Wpf.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
