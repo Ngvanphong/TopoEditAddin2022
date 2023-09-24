@@ -32,12 +32,32 @@ namespace TopoEditAddin2022.TestBiding
 
             //Test4AppShow.test4Wpf.comboboxSheets.ItemsSource = collection;
 
-            Test5AppShow.ShowTest5Wpf();
+            //Test5AppShow.ShowTest5Wpf();
 
-            var wallTypes = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Walls)
-                .WhereElementIsElementType().Cast<WallType>().ToList();
+            //var wallTypes = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Walls)
+            //    .WhereElementIsElementType().Cast<WallType>().ToList();
 
-            Test5AppShow.test5Wpf.comboboxWallTypes.ItemsSource= wallTypes;
+            //Test5AppShow.test5Wpf.comboboxWallTypes.ItemsSource= wallTypes;
+
+
+            ListViewAppShow.ShowListView();
+
+            var collection = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Sheets)
+                .WhereElementIsNotElementType().Cast<ViewSheet>().ToList();
+
+            List<SheetAction> sheetActions = new List<SheetAction>();
+            foreach(var sheet in collection)
+            {
+                SheetAction sheetAction = new SheetAction();
+                sheetAction.Sheet = sheet;
+                sheetAction.IsCheck = false;
+                sheetActions.Add(sheetAction);
+            }
+
+            ListViewAppShow.ListViewForm.listViewSheets.ItemsSource = sheetActions;
+
+
+          
 
 
            
