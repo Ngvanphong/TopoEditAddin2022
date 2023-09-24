@@ -33,8 +33,6 @@ namespace TopoEditAddin2022.TestBiding
                 }
                 t.Commit();
             }
-            
-
 
 
         }
