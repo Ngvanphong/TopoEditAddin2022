@@ -31,6 +31,7 @@ namespace TopoEditAddin2022.TestBiding
         private void btnClickOk(object sender, RoutedEventArgs e)
         {
             _changeTypeWallEvent.Raise();
+
         }
     }
 }
