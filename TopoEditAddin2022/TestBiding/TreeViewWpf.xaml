@@ -1,0 +1,38 @@
+﻿<Window x:Class="TopoEditAddin2022.TestBiding.TreeViewWpf"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TopoEditAddin2022.TestBiding"
+             
+             mc:Ignorable="d" 
+             Height="400" Width="400">
+    <Grid>
+        <!--<TreeView>
+            <TreeViewItem IsExpanded="True" Header="Cap 1">
+                <TreeViewItem Header="Cap 2.1">
+                    <TreeViewItem Header="Cap 3.1"></TreeViewItem>
+                </TreeViewItem>
+                <TreeViewItem Header="Cap 2.2">
+                    <TreeViewItem Header="Cap 3.1"></TreeViewItem>
+                </TreeViewItem>
+                <TreeViewItem>
+                    <TreeViewItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <CheckBox IsChecked="True"/>
+                            <TextBlock Text="Ten"/>
+                        </StackPanel>
+                    </TreeViewItem.Header>
+                </TreeViewItem>
+            </TreeViewItem>
+        </TreeView>-->
+        <TreeView Name="treeView">
+            <TreeView.ItemTemplate>
+                <HierarchicalDataTemplate DataType="{x:Type local:Folder}" ItemsSource="{Binding Childrens}">
+                    <TextBlock Text="{Binding Name}"/>
+                </HierarchicalDataTemplate>
+            </TreeView.ItemTemplate>
+        </TreeView>
+        
+    </Grid>
+</Window>

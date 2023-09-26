@@ -85,6 +85,7 @@
     </Compile>
     <Compile Include="TestBiding\ChangeTypeWallHandler.cs" />
     <Compile Include="TestBiding\DeleteSheetHandler.cs" />
+    <Compile Include="TestBiding\Folder.cs" />
     <Compile Include="TestBiding\ListViewAppShow.cs" />
     <Compile Include="TestBiding\ListViewWpf.xaml.cs">
       <DependentUpon>ListViewWpf.xaml</DependentUpon>
@@ -110,6 +111,10 @@
     <Compile Include="TestBiding\TestBinding.cs" />
     <Compile Include="TestBiding\TestWpf.xaml.cs">
       <DependentUpon>TestWpf.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestBiding\TreeViewAppShow.cs" />
+    <Compile Include="TestBiding\TreeViewWpf.xaml.cs">
+      <DependentUpon>TreeViewWpf.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -140,6 +145,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="TestBiding\TestWpf.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TestBiding\TreeViewWpf.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

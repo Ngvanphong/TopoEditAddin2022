@@ -8,6 +8,8 @@ using Autodesk.Revit.UI;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using System.Windows.Forms;
+using System.ComponentModel;
+using System.Windows.Data;
 
 namespace TopoEditAddin2022.TestBiding
 {
@@ -40,27 +42,50 @@ namespace TopoEditAddin2022.TestBiding
             //Test5AppShow.test5Wpf.comboboxWallTypes.ItemsSource= wallTypes;
 
 
-            ListViewAppShow.ShowListView();
+            //ListViewAppShow.ShowListView();
 
-            var collection = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Sheets)
-                .WhereElementIsNotElementType().Cast<ViewSheet>().ToList();
+            //var collection = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Sheets)
+            //    .WhereElementIsNotElementType().Cast<ViewSheet>().ToList();
 
-            List<SheetAction> sheetActions = new List<SheetAction>();
-            foreach(var sheet in collection)
-            {
-                SheetAction sheetAction = new SheetAction();
-                sheetAction.Sheet = sheet;
-                sheetAction.IsCheck = false;
-                sheetActions.Add(sheetAction);
-            }
+            //List<SheetAction> sheetActions = new List<SheetAction>();
+            //foreach(var sheet in collection)
+            //{
+            //    SheetAction sheetAction = new SheetAction();
+            //    sheetAction.Sheet = sheet;
+            //    sheetAction.IsCheck = false;
+            //    sheetActions.Add(sheetAction);
+            //}
 
-            ListViewAppShow.ListViewForm.listViewSheets.ItemsSource = sheetActions;
+            //ListViewAppShow.ListViewForm.listViewSheets.ItemsSource = sheetActions;
+
+            //CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListViewAppShow.ListViewForm.listViewSheets.ItemsSource);
+            //view.SortDescriptions.Add(new SortDescription("Sheet.SheetNumber", ListSortDirection.Ascending));
 
 
-          
+
+            TreeViewAppShow.ShowTreeView();
+
+            List<Folder> treeFolder= new List<Folder>();
+
+            Folder folder1= new Folder();
+            folder1.Name = "C";
+            
+            var folerChild1= new Folder();
+            folerChild1.Name = "Autodesk";
+            folder1.Childrens.Add(folerChild1);
+
+            var folerChild2 = new Folder();
+            folerChild2.Name = "Dell";
+            folder1.Childrens.Add(folerChild2);
+
+            var folerChild3 = new Folder();
+            folerChild3.Name = "Child Autodesk";
+            folerChild1.Childrens.Add(folerChild3);
+            treeFolder.Add(folder1);
+
+            TreeViewAppShow.TreeViewForm.treeView.ItemsSource = treeFolder;
 
 
-           
 
 
 

@@ -2,6 +2,8 @@
 using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,6 +29,8 @@ namespace TopoEditAddin2022.TestBiding
         {
             InitializeComponent();
             _deleteSheetEvent = deleteSheetEvent;
+
+           
         }
 
         private void btnChooseSheet(object sender, RoutedEventArgs e)
@@ -44,6 +48,20 @@ namespace TopoEditAddin2022.TestBiding
             //TaskDialog.Show("Title", listChecked.FirstOrDefault().Sheet.Name);
 
             _deleteSheetEvent.Raise();
+        }
+
+        private void shortSheetNumber(object sender, RoutedEventArgs e)
+        {
+            GridViewColumnHeader column = (sender as GridViewColumnHeader);
+            string sortBy = column.Tag.ToString();
+            listViewSheets.Items.SortDescriptions.Clear();
+            ListSortDirection newDir = ListSortDirection.Ascending;
+            listViewSheets.Items.SortDescriptions.Add(new SortDescription(sortBy, newDir));
+        }
+
+        private void txtChangeSheetNumber(object sender, TextChangedEventArgs e)
+        {
+            TaskDialog.Show("title",(sender as System.Windows.Controls.TextBox).Text);
         }
     }
 }

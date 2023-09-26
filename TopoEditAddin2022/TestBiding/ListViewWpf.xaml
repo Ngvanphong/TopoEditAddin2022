@@ -8,13 +8,19 @@
              Width="400" Height="600">
     <Grid Margin="5">
         <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
             <RowDefinition/>
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
-        <ListView Name="listViewSheets">
+        <TextBox TextChanged="txtChangeSheetNumber" HorizontalAlignment="Left" Width="200"/>
+        <ListView Grid.Row="1" Name="listViewSheets">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Width="100" Header="Sheet Number" DisplayMemberBinding="{Binding Sheet.SheetNumber}"/>
+                    <GridViewColumn Width="100" DisplayMemberBinding="{Binding Sheet.SheetNumber}" >
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader Content="SheetNumber" Click="shortSheetNumber" Tag="SheetNumber" />
+                        </GridViewColumn.Header>
+                    </GridViewColumn>
                     <GridViewColumn Width="200" Header="Name" DisplayMemberBinding="{Binding Sheet.Name}"/>
                     <GridViewColumn Width="100"  Header="Action">
                         <GridViewColumn.CellTemplate>
@@ -27,6 +33,6 @@
             </ListView.View>
             
         </ListView>
-        <Button Click="btnChooseSheet" HorizontalAlignment="Right" Width="100" Grid.Row="1 " Content="OK"/>
+        <Button Grid.Row="2" Click="btnChooseSheet" HorizontalAlignment="Right" Width="100"  Content="OK"/>
     </Grid>
 </Window>
