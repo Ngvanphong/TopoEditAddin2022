@@ -40,11 +40,11 @@ namespace TopoEditAddin2022
             //    allWall.Where(item => item.get_Parameter(BuiltInParameter.ALL_MODEL_INSTANCE_COMMENTS) != null
             //    && item.get_Parameter(BuiltInParameter.ALL_MODEL_INSTANCE_COMMENTS).AsString() == "300").ToList();
 
-            ////ParameterValueProvider paraFilter = new ParameterValueProvider(
-            ////    new ElementId((int)BuiltInParameter.ALL_MODEL_INSTANCE_COMMENTS));
-            ////FilterStringRule stringRule = new FilterStringRule(paraFilter, new FilterStringEquals(), "W");
-            ////ElementParameterFilter elementParameterFilter = new ElementParameterFilter(stringRule);
-            ////var allWallHasW2 = allWall.WherePasses(elementParameterFilter).ToList();
+            //ParameterValueProvider paraFilter = new ParameterValueProvider(
+            //    new ElementId((int)BuiltInParameter.ALL_MODEL_INSTANCE_COMMENTS));
+            //FilterStringRule stringRule = new FilterStringRule(paraFilter, new FilterStringEquals(), "W");
+            //ElementParameterFilter elementParameterFilter = new ElementParameterFilter(stringRule);
+            //var allWallHasW2 = allWall.WherePasses(elementParameterFilter).ToList();
 
             //using (TransactionGroup tg = new TransactionGroup(doc, "GroupEditWall"))
             //{
