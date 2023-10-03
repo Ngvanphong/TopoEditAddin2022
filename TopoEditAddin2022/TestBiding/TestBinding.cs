@@ -10,6 +10,7 @@ using Autodesk.Revit.DB.Architecture;
 using System.Windows.Forms;
 using System.ComponentModel;
 using System.Windows.Data;
+using System.Windows;
 
 namespace TopoEditAddin2022.TestBiding
 {
@@ -92,89 +93,167 @@ namespace TopoEditAddin2022.TestBiding
             Document doc = uiDoc.Document;
 
 
-            var collecitonIDs = uiDoc.Selection.GetElementIds();
+            //var collecitonIDs = uiDoc.Selection.GetElementIds();
 
-            List<FamilyInstance> familyInstances = new List<FamilyInstance>();
-            foreach (ElementId id in collecitonIDs)
-            {
-                Element element = doc.GetElement(id);
-                FamilyInstance instance = element as FamilyInstance;
-                if (instance != null)
-                {
-                    if (instance.Category != null && instance.Category.Id.IntegerValue
-                        == (int)BuiltInCategory.OST_Columns)
-                    {
-                        familyInstances.Add(instance);
-                    }
-                }
-            }
+            //List<FamilyInstance> familyInstances = new List<FamilyInstance>();
+            //foreach (ElementId id in collecitonIDs)
+            //{
+            //    Element element = doc.GetElement(id);
+            //    FamilyInstance instance = element as FamilyInstance;
+            //    if (instance != null)
+            //    {
+            //        if (instance.Category != null && instance.Category.Id.IntegerValue
+            //            == (int)BuiltInCategory.OST_Columns)
+            //        {
+            //            familyInstances.Add(instance);
+            //        }
+            //    }
+            //}
 
-            //var point1 = uiDoc.Selection.PickPoint("Pick a point");
-            //var point2 = uiDoc.Selection.PickPoint("Pick a point");
-            //var pickRectange = uiDoc.Selection.PickElementsByRectangle("Pick a rectange");
+            ////var point1 = uiDoc.Selection.PickPoint("Pick a point");
+            ////var point2 = uiDoc.Selection.PickPoint("Pick a point");
+            ////var pickRectange = uiDoc.Selection.PickElementsByRectangle("Pick a rectange");
 
-            //var pickObject = uiDoc.Selection.PickObject(Autodesk.Revit.UI.Selection.ObjectType.Element);
-            //Element elementPick = doc.GetElement(pickObject);
-
-
-            var pickObjectFace = uiDoc.Selection.PickObject(Autodesk.Revit.UI.Selection.ObjectType.Face);
-            Face face = doc.GetElement(pickObjectFace).GetGeometryObjectFromReference(pickObjectFace) as Face;
+            ////var pickObject = uiDoc.Selection.PickObject(Autodesk.Revit.UI.Selection.ObjectType.Element);
+            ////Element elementPick = doc.GetElement(pickObject);
 
 
-            var colleciton= new FilteredElementCollector(doc)
-                .OfCategory(BuiltInCategory.OST_StructuralFraming).WhereElementIsElementType().ToList();
-            
-            using(Transaction t= new Transaction(doc, "CreateBeam"))
-            {
-                t.Start();
-
-                for( int i = 0;i < colleciton.Count; i++)
-                {
-                    XYZ point1 = XYZ.Zero - XYZ.BasisY * i * 500/304.8;
-                    XYZ point2 = point1 + XYZ.BasisX * 3000 / 304.8;
-                    Line line = Line.CreateBound(point1, point2);
-                    FamilySymbol symbol = colleciton[i] as FamilySymbol;
-                    if (!symbol.IsActive) symbol.Activate();
-                    var beam = doc.Create.NewFamilyInstance(line, symbol,
-                        doc.ActiveView.GenLevel, Autodesk.Revit.DB.Structure.StructuralType.Beam);
-
-                    var colum = doc.Create.NewFamilyInstance(new XYZ(0, 0, 0), symbol,
-                        Autodesk.Revit.DB.Structure.StructuralType.Column);
-                    //Revit
-
-                    var familyInstance3 = doc.Create.NewFamilyInstance(new XYZ(0, 0, 0), symbol,
-                        Autodesk.Revit.DB.Structure.StructuralType.NonStructural);
-
-                    
-                    var lighting = doc.Create.NewFamilyInstance(face, new XYZ(0,0,0), XYZ.BasisZ,symbol);
+            //var pickObjectFace = uiDoc.Selection.PickObject(Autodesk.Revit.UI.Selection.ObjectType.Face);
+            //Face face = doc.GetElement(pickObjectFace).GetGeometryObjectFromReference(pickObjectFace) as Face;
 
 
-                    var floor = Floor.Create(doc, new List<CurveLoop>(), symbol.Id, doc.ActiveView.GenLevel.Id);
+            //var colleciton= new FilteredElementCollector(doc)
+            //    .OfCategory(BuiltInCategory.OST_StructuralFraming).WhereElementIsElementType().ToList();
 
-                    ReferencePlane referencePlane = null;
-                    Plane plane = Plane.CreateByNormalAndOrigin(XYZ.BasisX, XYZ.Zero);
-                    SketchPlane sk = SketchPlane.Create(doc, plane);
-                    referencePlane = sk.getRe
+            //using(Transaction t= new Transaction(doc, "CreateBeam"))
+            //{
+            //    t.Start();
 
-                    RoofType roofType = null;
-                    var roof = doc.Create.NewExtrusionRoof(new CurveArray(),
-                        plannarFace.Reference, doc.ActiveView.GenLevel.Id, roofType, 0, 1000);
+            //    for( int i = 0;i < colleciton.Count; i++)
+            //    {
+            //        XYZ point1 = XYZ.Zero - XYZ.BasisY * i * 500/304.8;
+            //        XYZ point2 = point1 + XYZ.BasisX * 3000 / 304.8;
+            //        Line line = Line.CreateBound(point1, point2);
+            //        FamilySymbol symbol = colleciton[i] as FamilySymbol;
+            //        if (!symbol.IsActive) symbol.Activate();
+            //        var beam = doc.Create.NewFamilyInstance(line, symbol,
+            //            doc.ActiveView.GenLevel, Autodesk.Revit.DB.Structure.StructuralType.Beam);
+
+            //        var colum = doc.Create.NewFamilyInstance(new XYZ(0, 0, 0), symbol,
+            //            Autodesk.Revit.DB.Structure.StructuralType.Column);
+            //        //Revit
+
+            //        var familyInstance3 = doc.Create.NewFamilyInstance(new XYZ(0, 0, 0), symbol,
+            //            Autodesk.Revit.DB.Structure.StructuralType.NonStructural);
 
 
+            //        var lighting = doc.Create.NewFamilyInstance(face, new XYZ(0,0,0), XYZ.BasisZ,symbol);
 
 
-                    Element beamType= doc.GetElement(beam.GetTypeId());
-                    beamType.get_Parameter(BuiltInParameter.ALL_MODEL_INSTANCE_COMMENTS).Set("11");
-                    
-                    double vaule= beam.LookupParameter("MinhDinhNghia").AsDouble();
+            //        var floor = Floor.Create(doc, new List<CurveLoop>(), symbol.Id, doc.ActiveView.GenLevel.Id);
+
+            //        ReferencePlane referencePlane = null;
+            //        Plane plane = Plane.CreateByNormalAndOrigin(XYZ.BasisX, XYZ.Zero);
+            //        SketchPlane sk = SketchPlane.Create(doc, plane);
+            //        referencePlane = sk.getRe
+
+            //        RoofType roofType = null;
+            //        var roof = doc.Create.NewExtrusionRoof(new CurveArray(),
+            //            plannarFace.Reference, doc.ActiveView.GenLevel.Id, roofType, 0, 1000);
 
 
 
 
-                } 
-                    
-                t.Commit();
-            }
+            //        Element beamType= doc.GetElement(beam.GetTypeId());
+            //        beamType.get_Parameter(BuiltInParameter.ALL_MODEL_INSTANCE_COMMENTS).Set("11");
+
+            //        double vaule= beam.LookupParameter("MinhDinhNghia").AsDouble();
+
+
+
+
+            //    } 
+
+            //t.Commit();
+
+            //Line line = null;
+            //XYZ start = line.GetEndPoint(0);
+            //XYZ end= line.GetEndPoint(1);
+
+            //XYZ vector = end - start;
+            //double lenth = vector.GetLength();
+            //XYZ normalizeVector= vector.Normalize();
+
+
+            //Wall wall = null;
+            //LocationCurve locationCurve = wall.Location as LocationCurve;
+            //Curve curve = locationCurve.Curve;
+            //Line line = curve as Line;
+            //if (line != null)
+            //{
+            //    // tuong thang
+            //    XYZ directionLine = line.Direction;
+            //    XYZ vuonggocLine = directionLine.CrossProduct(XYZ.BasisZ).Normalize(); // vector vuong 
+
+            //    XYZ vectorTranslate = vuonggocLine * 200 / 304.8;
+
+            //    Transform moveTransform = Transform.CreateTranslation(vectorTranslate);
+            //    XYZ newStart = moveTransform.OfPoint(line.GetEndPoint(0));
+            //    XYZ endStart = moveTransform.OfPoint(line.GetEndPoint(1));
+            //    Line lineOffset1 = Line.CreateBound(newStart, newStart);
+
+            //    Transform moveTransform2 = Transform.CreateTranslation(-vectorTranslate);
+            //    XYZ newStart1 = moveTransform.OfPoint(line.GetEndPoint(0));
+            //    XYZ endStart1 = moveTransform.OfPoint(line.GetEndPoint(1));
+            //    Line lineOffset2 = Line.CreateBound(newStart1, newStart1);
+
+
+            //    // quay line
+            //    XYZ start = line.GetEndPoint(0);
+            //    XYZ end = line.GetEndPoint(1);
+
+            //    // Move truc Z den diem start cua line;
+            //    XYZ vectorToStart = start - XYZ.Zero;
+            //    Transform translate = Transform.CreateTranslation(vectorToStart);
+            //    XYZ axis = translate.OfVector(XYZ.BasisZ);
+
+            //    // quay diem cuoi cua line mot goc 45 quanh truc tai diem start
+            //    Transform rotionTransoform = Transform.CreateRotation(axis, Math.PI / 4);
+            //    XYZ newEndP = rotionTransoform.OfPoint(end);
+
+            //    Line lineRotaion = Line.CreateBound(start, newEndP);
+
+
+
+            //    Line line1 = null;
+            //    Line line2 = null;
+
+            //    XYZ direction1 = line1.Direction;
+            //    XYZ direction2 = line2.Direction;
+            //    double tichVoHuong = direction1.DotProduct(direction2);
+            //    //if(tichVoHuong==0) thi line1 va line2 vuong goc
+
+            //    //if (tichVoHuong == 1||  tichVoHuong == -1) thi 2 vector song song
+
+
+            //    //var isIntersection = line1.Intersect(line2, out var listPoint);
+            //    //if(isIntersection== SetComparisonResult.Disjoint)
+            //    //{
+            //    //    // 2 line khong giao nhau
+            //    //}else if(isIntersection==SetComparisonResult.Overlap)
+            //    //{
+            //    //    // 2 line co it nhat 1 diem chung
+            //    //}
+
+
+
+
+            //    Transform transform = Transform.Identity;
+            //    transform.BasisX = XYZ.BasisY;
+            //    transform.BasisY = XYZ.BasisZ;
+            //    transform.BasisZ = XYZ.BasisX;
+
+            //    XYZ pointOrigin = XYZ.Zero;
 
 
 
@@ -184,6 +263,39 @@ namespace TopoEditAddin2022.TestBiding
 
 
 
+
+            //}
+            //else
+            //{
+            //    // Lam tuong cong
+            //}
+
+
+
+
+
+
+
+
+            //}
+
+
+
+
+
+
+
+
+            Transform transform = Transform.Identity;
+            transform.BasisX = -XYZ.BasisY;
+            transform.BasisY = XYZ.BasisZ;
+            transform.BasisZ = XYZ.BasisZ;
+
+            XYZ pointOrigin = new XYZ(1,2,3);
+
+            XYZ newPoint = transform.OfPoint(pointOrigin);
+
+          
 
 
 
