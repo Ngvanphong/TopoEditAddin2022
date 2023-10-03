@@ -1,16 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Autodesk.Revit.Attributes;
-using Autodesk.Revit.UI;
+﻿using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Architecture;
-using System.Windows.Forms;
-using System.ComponentModel;
-using System.Windows.Data;
-using System.Windows;
+using Autodesk.Revit.UI;
 
 namespace TopoEditAddin2022.TestBiding
 {
@@ -287,15 +277,44 @@ namespace TopoEditAddin2022.TestBiding
 
 
             Transform transform = Transform.Identity;
-            transform.BasisX = -XYZ.BasisY;
+            transform.BasisX = XYZ.BasisY;
             transform.BasisY = XYZ.BasisZ;
-            transform.BasisZ = XYZ.BasisZ;
+            transform.BasisZ = XYZ.BasisX;
 
             XYZ pointOrigin = new XYZ(1,2,3);
 
             XYZ newPoint = transform.OfPoint(pointOrigin);
 
-          
+
+            ViewSection view = null; ;
+            XYZ upVector = view.UpDirection;
+            XYZ rightVector= view.RightDirection;
+            XYZ directionView = view.ViewDirection;
+
+
+            Transform transform2 = Transform.Identity;
+            transform.BasisX = rightVector;
+            transform.BasisY = upVector;
+            transform.BasisZ = directionView;
+
+
+
+            Transform trasfromMatBang = Transform.Identity;
+            trasfromMatBang.BasisX = XYZ.BasisY;
+            trasfromMatBang.BasisY = XYZ.BasisZ;
+            trasfromMatBang.BasisZ = XYZ.BasisX;
+            XYZ newPoint1= trasfromMatBang.OfPoint(pointOrigin);
+
+            Transform transformMatDung= trasfromMatBang;
+            transformMatDung.BasisX = rightVector;
+            transformMatDung.BasisY = upVector;
+            transformMatDung.BasisZ = directionView;
+
+            XYZ newPont2= transformMatDung.OfPoint(newPoint1);
+
+
+
+
 
 
 
