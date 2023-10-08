@@ -84,6 +84,11 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="TestBiding\ChangeTypeWallHandler.cs" />
+    <Compile Include="TestBiding\CreateSectionAppShow.cs" />
+    <Compile Include="TestBiding\CreateSectionHandler.cs" />
+    <Compile Include="TestBiding\CreateSectionWpf.xaml.cs">
+      <DependentUpon>CreateSectionWpf.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TestBiding\DeleteSheetHandler.cs" />
     <Compile Include="TestBiding\Folder.cs" />
     <Compile Include="TestBiding\ListViewAppShow.cs" />
@@ -91,6 +96,7 @@
       <DependentUpon>ListViewWpf.xaml</DependentUpon>
     </Compile>
     <Compile Include="TestBiding\Save.cs" />
+    <Compile Include="TestBiding\Save2.cs" />
     <Compile Include="TestBiding\SheetAction.cs" />
     <Compile Include="TestBiding\Test2AppShow.cs" />
     <Compile Include="TestBiding\Test2Wpf.xaml.cs">
@@ -124,6 +130,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="TestBiding\CreateSectionWpf.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="TestBiding\ListViewWpf.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
